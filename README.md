@@ -54,3 +54,33 @@ This project implements a real-time chat application with AI interaction using N
     ```bash
     npm run dev
     ```
+
+## Deployment
+
+This project is designed to be easily deployed on Vercel. Simply connect your GitHub repository to Vercel, and Vercel will automatically build and deploy your application.
+
+## Challenges and Solutions
+
+1.  **Challenge: Managing Conversation Context**
+
+    *   **Description:** AI models have limited context windows, meaning they can only "remember" a certain number of previous messages in a conversation. As conversations grow longer, the AI might lose track of earlier exchanges.
+    *   **Solution:** Implemented a basic context management strategy using history truncation. The API now sends only the last 10 messages of the conversation to the Gemini API. This keeps the request size manageable and helps maintain relevant context within the model's window. For a production application, implementing a database and more advanced context management (like summarization) would be the next step.
+
+2.  **Challenge: Rendering Complex Content in Chat Messages**
+
+    *   **Description:** Chat messages often contain more than just plain text. Users might share code snippets, lists, tables, or even mathematical equations. Displaying these correctly requires special handling.
+    *   **Solution:** Used `react-markdown` with the `remark-gfm` plugin to render Markdown formatted text. This allows for lists, bold text, italics, links, and other common Markdown elements. Additionally, `react-syntax-highlighter` was integrated to provide syntax highlighting for code blocks, improving readability.
+
+3.  **Challenge: Providing User Feedback During API Calls**
+
+    *   **Description:** While waiting for the AI to generate a response, the user needs feedback that the application is working. A long delay without feedback can lead to a poor user experience.
+    *   **Solution:** Implemented a loading indicator using the `react-spinners` library. A spinner is displayed while the application is waiting for a response from the Gemini API, providing visual feedback to the user.
+
+4. **Challenge: Handling API Errors Gracefully**
+
+    *   **Description:** Network issues, incorrect API keys, or problems on the Gemini API side can lead to errors. The application needs to handle these errors gracefully and provide informative messages to the user.
+    *   **Solution:** Implemented detailed error logging on the backend. The API route now logs the full error object, including any response data, status codes, and headers from the Gemini API. On the frontend, a generic error message is displayed to the user if an API request fails. More specific error handling could be added in the future based on the error codes received from the backend.
+
+## Time Spent
+
+Approximately 7 hours.
